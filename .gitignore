@@ -1,0 +1,5 @@
+# ignore .env file
+.env
+
+#ignore message log (brain)
+brain.txt
