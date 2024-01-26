@@ -130,7 +130,7 @@ async def get_trek_quote(ctx):
         random_quote = random.choice(star_trek_quotes)
         quote_text = random_quote['quote']
         author = random_quote['author']
-        await ctx.send(f'Star Trek Quote by {author}: {quote_text}')
+        await ctx.send(f'{quote_text} -{author}')
         logging.info('Sent a Star Trek quote in response to the !trekquote command.')
     except Exception as e:
         await ctx.send(f'Error fetching Star Trek quote: {e}')
