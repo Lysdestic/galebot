@@ -1,14 +1,11 @@
-# bot.py
 import os
-
 import discord
 from discord.ext import commands
-
 import datetime
 import random
-
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
@@ -31,10 +28,6 @@ brain_file = 'brain.txt'
 async def on_ready():
     print(f'We have logged in as {bot.user.name}')
     print('------')
-
-# Function to get the current date and time
-def get_current_date():
-    return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 # Function to get a random entry from the brain file
 def get_random_entry_from_brain(guild):
@@ -66,12 +59,13 @@ async def on_message(message):
         mentioned = bot.user.mentioned_in(message)
         starts_with_username = message.content.lower().startswith(bot.user.name.lower())
         starts_with_display_name = message.content.lower().startswith(bot.user.display_name.lower())
+        # Check if the bot's name is mentioned or the message starts with the bot's name
         if bot_name in message.content.lower() or starts_with_display_name or starts_with_username or mentioned:
             response = get_random_entry_from_brain(message.guild)
             await message.channel.send(response)
     await bot.process_commands(message)
 
-# New command to display the current date
+# Command to display the current date
 @bot.command(name='date')
 async def show_current_date(ctx):
     current_date = get_current_date()
@@ -94,5 +88,4 @@ async def change_bot_nickname(ctx, *, new_nickname):
         await ctx.send(f'Error changing nickname: {e}')
 
 # Run the bot
-
 bot.run(TOKEN)
